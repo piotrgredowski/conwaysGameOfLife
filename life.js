@@ -89,6 +89,7 @@ function cloneArray(array) {
           var checkbox = document.createElement('input');
           checkbox.type = 'checkbox';
           this.checkboxes[y][x] = checkbox;
+          checkbox.coords = [y, x];
 
           cell.appendChild(checkbox);
           row.appendChild(cell);
@@ -99,6 +100,39 @@ function cloneArray(array) {
       this.grid.addEventListener('change', function(evt) {
         if (evt.target.nodeName.toLowerCase() == 'input') {
           me.started = false;
+        }
+      });
+
+      this.grid.addEventListener('keyup', function(evt) {
+        var checkbox = evt.target;
+        if (checkbox.nodeName.toLowerCase() == 'input') {
+          var coords = checkbox.coords;
+          var y = coords[0];
+          var x = coords[1];
+          console.log(evt.keyCode);
+
+          switch (evt.keyCode) {
+            case 37: //left
+              if (x > 0) {
+                me.checkboxes[y][x-1].focus();
+              }
+              break;
+            case 38: //up
+              if (y > 0) {
+                me.checkboxes[y-1][x].focus();
+              }
+              break;
+            case 39: //right
+              if (x < me.size - 1) {
+                me.checkboxes[y][x+1].focus();
+              }
+              break;
+            case 40: //down
+              if (y < me.size - 1) {
+                me.checkboxes[y+1][x].focus();
+              }
+              break;
+          };
         }
       });
 
@@ -142,7 +176,7 @@ function cloneArray(array) {
   };
 })()
 
-var lifeView = new LifeView(document.getElementById('grid'), 12);
+var lifeView = new LifeView(document.getElementById('grid'), 30);
 
 (function() {
   var buttons = {
@@ -150,15 +184,18 @@ var lifeView = new LifeView(document.getElementById('grid'), 12);
   };
 
   buttons.next.addEventListener('click', function(event) {
+    lifeView.autoplay = this.checked;
     lifeView.next();
   });
 
   $('#autoplay').addEventListener('change', function(e) {
-    buttons.next.textContent = this.checked? 'Start' : 'Next';
+    buttons.next.disabled = this.checked;
 
-    lifeView.autoplay = this.checked;
 
-    if (!this.checked ) {
+    if (this.checked ) {
+      lifeView.autoplay = this.checked;
+      lifeView.next();
+    } else {
       clearTimeout(lifeView.timer);
     }
   });

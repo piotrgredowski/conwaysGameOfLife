@@ -5,7 +5,7 @@
 
 body {
   text-align: center;
-  font-family: sans-sefif;
+  font-family: Arial, sans-serif;
 }
 
 h1 {
@@ -13,13 +13,25 @@ h1 {
 }
 
 #grid {
-  margin: auto;
+  margin: 1em auto 0;
   border-spacing: 0;
   border-collapse: collapse;
 }
 
   #grid td {
     border: 1px solid gray;
+  }
+
+  @-webkit-keyframes birth {
+    50% {
+      box-shadow: 0 0 0 99px green inset;
+    }
+  }
+
+  @keyframes birth {
+    50% {
+      box-shadow: 0 0 0 99px green inset;
+    }
   }
 
   #grid input[type="checkbox"] {
@@ -31,9 +43,47 @@ h1 {
     height: 20px;
     border: 0;
     background: white;
+    transition: .5s;
   }
 
     #grid input[type="checkbox"]:checked {
-      background: black;
-      box-shadow: 0 0 0 99px black inset; //because firefox doesn't allow to add background to checkbox
+      box-shadow: 0 0 0 99px black inset; //because firefox doesn't allow to bg be black
+      -webkit-animation: birth 1s;
+      animation: birth 1s;
     }
+
+button,
+.button {
+  padding: .3em .5em;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: .3em;
+  box-shadow: 0 1px 0 hsla(0, 0%, 100%, .7) inset, 0 .15em .1em -.1em rgba(0, 0, 0, .4);
+  background: linear-gradient(hsla(0, 0%, 100%, .3), hsla(0, 0%, 100%, 0)) hsl(80, 80%, 35%);
+  color: white;
+  text-shadow: 0 -.05em .05em rgba(0, 0, 0, .3);
+  font: inherit;
+  font-weight: bold;
+  outline: none;
+}
+
+.button {
+  padding-top: .33em;
+  padding-bottom: .33em
+}
+
+button:enabled:active,
+.button:active,
+input[type="checkbox"]:checked + label.button {
+  background-image: none;
+  box-shadow: 0 .05em 2em rgba(0, 0, 0, .5) inset;
+}
+
+button:disabled {
+  background-color: hsl(80, 20%, 40%);
+  cursor: not-allowed;
+}
+
+#autoplay {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
