@@ -5,11 +5,38 @@
 
 body {
   text-align: center;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 h1 {
-  margin: .5em 0 1em;
+  margin: .5em 0 .5em;
+}
+
+a {
+  color: steelblue;
+  text-decoration: none;
+}
+
+a:visited {
+  color: purple;
+}
+
+#container {
+  margin: auto;
+  max-width: 500px;
+}
+
+#tip {
+  font-size: .8em;
+  margin: .5em auto;
+}
+
+#info {
+  font-size: 0.9em;
+  display: inline-block;
+  width: 375px;
+  text-align: center;
+  margin: 10px auto;
 }
 
 #grid {
@@ -39,8 +66,8 @@ h1 {
     -moz-appearance: none;
     appearance: none;
     display: block;
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     border: 0;
     background: white;
     transition: .5s;
@@ -51,6 +78,28 @@ h1 {
       -webkit-animation: birth 1s;
       animation: birth 1s;
     }
+
+#todo {
+  margin: 20px auto;
+}
+
+  #todo ul {
+    text-align: left;
+    font-weight: bold;
+    font-size: 1em;
+  }
+
+  #todo li {
+    font-weight: normal;
+    text-align: left;
+    list-style-type: square;
+  }
+
+  #todo li li {
+    margin-left: 20px;
+    list-style-type: lower-alpha;
+    font-size: .8em;
+  }
 
 button,
 .button {

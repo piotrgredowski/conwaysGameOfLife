@@ -3,18 +3,53 @@
   <head>
     <meta charset="utf-8">
     <title>Conway's Game of Life</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
   </head>
   <body>
-    <h1>Conway's Game of Life</h1>
+    <div id="container">
+      <h1>Conway's Game of Life</h1>
+      <div id="tip">(Looks and works best in Chrome.)</div>
+      <div id="info">
+        <div>Click on any square. Control with arrows and space button. Press "Autoplay" to start or "Next" to iterate manually. Read more about <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">concept</a>. </div>
+      </div>
+      <br>
+      <button class="next">Next</button>
+      <input type ="checkbox" id="autoplay"/>
+      <label for="autoplay" class="button">Autoplay</label>
 
-    <button class="next">Next</button>
-    <input type ="checkbox" id="autoplay"/>
-    <label for="autoplay" class="button">Autoplay</label>
+      <table id="grid">
 
-    <table id="grid">
-
-    </table>
+      </table>
+      <div id="todo">
+        <ul>
+          Todo:
+          <li>Input for selecting grid size.</li>
+          <li>Input for choosing refresh frequency.</li>
+          <li>Stopping calculations when only still lifes or nothing remains on board.</li>
+          <li>Button for enabling/disabling <em>birth</em> animation.</li>
+          <li>Indicator of how many iterations were done.</li>
+          <li>Challenges:
+            <ul>
+              <li>Pattern is shown at the grid and user have to draw a pattern which will lead to this shown.</li>
+            </ul>
+          </li>
+          <li>Input for number of iterations which could be performed instantly.</li>
+          <li>Allow to choose some defined pattern to be applied.</li>
+        </ul>
+      </div>
+      <div id="footer"><p>
+        by <a href="http://codepen.io/piotrgredowski/">piotrgredowski</a>
+      </p>
+      <p>
+        created (mostly) during <a href="https://app.pluralsight.com/player?course=play-by-play-lea-verou&author=lea-verou&name=play-by-play-lea-verou-m4&clip=0">pluralsight's advanced css course</a>
+      </p>
+      <p>
+        with <a href="http://lea.verou.me/">Lea Verou</a>
+      </p>
+      </div>
+    </div>
     <script src="life.js" charset="utf-8"></script>
   </body>
 </html>
