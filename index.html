@@ -5,26 +5,45 @@
     <title>Conway's Game of Life</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="box.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="icon" href="favicon.png" type="image/x-icon"/>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon"/>
   </head>
   <body>
     <div id="container">
       <h1>Conway's Game of Life</h1>
       <div id="tip">(Looks and works best in Chrome.)</div>
-      <div id="info">
-        <div>Click on any square. Control with arrows and space button. Press "Autoplay" to start or "Next" to iterate manually. Read more about <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">concept</a>. </div>
-      </div>
-      <br>
-      <button class="next">Next</button>
-      <input type ="checkbox" id="autoplay"/>
-      <label for="autoplay" class="button">Autoplay</label>
 
+      <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'about')">About</button>
+        <button class="tablinks" onclick="openTab(event, 'controls')">Controls</button>
+        <button class="tablinks" onclick="openTab(event, 'settings')" disabled>Settings</button>
+      </div>
+
+      <div id="controls" class="tabcontent">
+        <p>Click on any square. Control with arrows and space button. Press "Autoplay" to start or "Next" to iterate manually.</p>
+      </div>
+
+      <div id="about" class="tabcontent">
+        <p><a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">Read more about concept</a>. </p>
+      </div>
+
+      <div id="settings" class="tabcontent">
+        <p></p>
+      </div>
+
+      <div class="controlButtons"><button class="next">Next</button>
+        <input type ="checkbox" id="autoplay"/>
+        <label for="autoplay" class="button">Autoplay</label>
+        </div>
       <table id="grid">
 
       </table>
       <div id="todo">
         <ul>
           Todo:
+          <li class="done"><em>About</em>, <em>Controls</em> & <em>Settings</em> buttons & tabs.</li>
           <li>Input for selecting grid size.</li>
           <li>Input for choosing refresh frequency.</li>
           <li>Stopping calculations when only still lifes or nothing remains on board.</li>
@@ -51,5 +70,6 @@
       </div>
     </div>
     <script src="life.js" charset="utf-8"></script>
+    <script src="box.js" charset="utf-8"></script>
   </body>
 </html>
