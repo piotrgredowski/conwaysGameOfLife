@@ -1,4 +1,4 @@
-function openTab(evt, cityName) {
+function openTab(evt, choosenTab) {
     // Declare all variables
     var i, tabcontent, tablinks;
 
@@ -15,6 +15,21 @@ function openTab(evt, cityName) {
     }
 
     // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(cityName).style.display = "block";
+    document.getElementById(choosenTab).style.display = "block";
     evt.currentTarget.className += " active";
+}
+
+function closeTab() {
+  var closeX, tabcontent, tablinks;
+  closeX = document.getElementsByClassName("fa-times");
+
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+  }
+
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
 }

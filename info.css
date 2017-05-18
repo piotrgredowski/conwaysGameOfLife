@@ -11,14 +11,25 @@ div.tab {
 
 /* Create an active/current tablink class */
 div.tab button.active {
-    background-color: #ccc;
+    background-image: none;
+    box-shadow: 0 .05em 2em rgba(0, 0, 0, .5) inset;
+}
+
+i {
+}
+
+i:hover {
+  color: gray;
 }
 
 /* Style the tab content */
 .tabcontent {
     display: none;
     padding: 3px 6px;
-    font-size: .9em;
+    font-size: .8em;
+    /*border: 1px solid black;
+    border-radius: 1em;*/
+    margin-bottom: .8em;
 }
 
 /* Info buttons*/

@@ -180,12 +180,18 @@ var lifeView = new LifeView(document.getElementById('grid'), 30);
 
 (function() {
   var buttons = {
-    next: $('button.next')
+    next: $('button.next'),
+    birth: $('input#birthToggle')
   };
 
   buttons.next.addEventListener('click', function(event) {
     lifeView.autoplay = this.checked;
     lifeView.next();
+  });
+
+  buttons.birth.addEventListener('click', function(event) {
+    console.log("birth");
+    
   });
 
   $('#autoplay').addEventListener('change', function(e) {

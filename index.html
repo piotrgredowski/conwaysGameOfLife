@@ -5,10 +5,11 @@
     <title>Conway's Game of Life</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="box.css">
+    <link rel="stylesheet" href="info.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
     <link rel="icon" href="favicon.png" type="image/x-icon"/>
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div id="container">
@@ -18,19 +19,25 @@
       <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'about')">About</button>
         <button class="tablinks" onclick="openTab(event, 'controls')">Controls</button>
-        <button class="tablinks" onclick="openTab(event, 'settings')" disabled>Settings</button>
+        <button class="tablinks" onclick="openTab(event, 'settings')" >Settings</button>
       </div>
 
       <div id="controls" class="tabcontent">
+        <i class="fa fa-times" aria-hidden="true" onclick="closeTab()"></i>
         <p>Click on any square. Control with arrows and space button. Press "Autoplay" to start or "Next" to iterate manually.</p>
       </div>
 
       <div id="about" class="tabcontent">
+        <i class="fa fa-times" aria-hidden="true" onclick="closeTab()"></i>
         <p><a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">Read more about concept</a>. </p>
       </div>
 
       <div id="settings" class="tabcontent">
-        <p></p>
+        <i class="fa fa-times" aria-hidden="true" onclick="closeTab()"></i>
+        <div>
+          <input type="checkbox" id="birthToggle">
+          <label for="birthToggle"><em>Birth</em> effect</label>
+        </div>
       </div>
 
       <div class="controlButtons"><button class="next">Next</button>
@@ -70,6 +77,6 @@
       </div>
     </div>
     <script src="life.js" charset="utf-8"></script>
-    <script src="box.js" charset="utf-8"></script>
+    <script src="info.js" charset="utf-8"></script>
   </body>
 </html>
