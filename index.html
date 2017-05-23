@@ -18,39 +18,93 @@
 
       <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'about')">About</button>
+        <button class="tablinks" onclick="openTab(event, 'todos')">Todo</button>
         <button class="tablinks" onclick="openTab(event, 'controls')">Controls</button>
+        <button class="tablinks" onclick="openTab(event, 'patterns')">Patterns</button>
         <button class="tablinks" onclick="openTab(event, 'settings')">Settings</button>
       </div>
 
       <div id="controls" class="tabcontent">
-        <i class="fa fa-times" aria-hidden="true" onclick="closeTab()"></i>
         <p>Click on any square. Control with arrows and space button. Press "Autoplay" to start or "Next" to iterate manually.</p>
       </div>
 
+      <div id="patterns" class="tabcontent">
+        <p>Choose patern and click somewhere on grid.</p>
+        <form id="patternForm" name="pattern">
+          <div>
+            <input type="radio" name="pattern" value="none" id="none" checked>
+            <label for="none">None</label>
+          </div>
+          <div>
+            <input type="radio" name="pattern" value="glider" id="glider">
+            <label for="glider">Glider</label>
+          </div>
+          <div>
+            <input type="radio" name="pattern" value="tumbler" id="tumbler">
+          <label for="tumbler">Tumbler</label>
+          </div>
+          <div>
+            <input type="radio" name="pattern" value="smallExploder" id="smallExploder">
+            <label for="smallExploder">Small Exploder</label>
+          </div>
+          <div>
+            <input type="radio" name="pattern" value="blinker" id="blinker">
+            <label for="blinker">Blinker</label>
+          </div>
+          <div>
+            <input type="radio" name="pattern" value="toad" id="toad">
+            <label for="toad">Toad</label>
+          </div>
+        </form>
+      </div>
+
       <div id="about" class="tabcontent">
-        <i class="fa fa-times" aria-hidden="true" onclick="closeTab()"></i>
         <p><a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">Read more about concept</a>. </p>
+        <div id="footer"><p>
+          Created by <a href="http://codepen.io/piotrgredowski/">piotrgredowski</a>
+        </p>
+        <p>
+           (partly) during <a href="https://app.pluralsight.com/player?course=play-by-play-lea-verou&author=geoffrey-grosenbach&name=play-by-play-lea-verou-m1&clip=0">pluralsight's advanced css course</a>
+        </p>
+        <p>
+          with <a href="http://lea.verou.me/">Lea Verou</a>
+        </p>
+        </div>
+      </div>
+
+      <div id="todos" class="tabcontent">
+        <div id="todo">
+          <ul>
+            Todo:
+            <li class="done"><em>About</em>, <em>Controls</em> & <em>Settings</em> buttons & tabs.</li>
+            <li class="done">Input for selecting grid size.</li>
+            <li class="done">Input for choosing refresh frequency.</li>
+            <li class="done">Stopping calculations when only still lifes or nothing remains on board.</li>
+            <li>Indicator of how many iterations were done.</li>
+            <li>Challenges:
+              <ul>
+                <li>Pattern is shown at the grid and user have to draw a pattern which will lead to this shown.</li>
+              </ul>
+            </li>
+            <li>Input for number of iterations which could be performed instantly.</li>
+            <li>Allow to choose some defined pattern to be applied.</li>
+          </ul>
+        </div>
       </div>
 
       <div id="settings" class="tabcontent">
-        <i class="fa fa-times" aria-hidden="true" onclick="closeTab()"></i>
           <table>
             <tr>
               <td>
-                <label for="gridSize">Grid size</label>
+                <label for="gridDensity"><p>Grid density </p><p>
+                  (change will reset game)
+                </p></label>
               </td>
               <td>
-                <input type="number" id="gridSize">
-                <input type="checkbox" id="gridSizeAuto">
-                <label for="gridSizeAuto">Auto</label>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="cellSize">Cell size [px]</label>
+                <input type="range" id="gridDensity" value="35" min="10" max="100">
               </td>
               <td>
-                <input type="number" id="cellSize" value="10">
+                <span id="gridDensityValue">35</span>
               </td>
             </tr>
             <tr>
@@ -58,59 +112,29 @@
                 <label for="freq">Refresh rate [Hz]</label>
               </td>
               <td>
-                <input type="number" id="freq">
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="birthToggle"><em>Birth</em> effect</label>
+                <input type="range" id="freq" min="1" max="25" value="5">
+
               </td>
               <td>
-                <input type="checkbox" id="birthToggle">
+                <span id="rangeValue">5</span>
               </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
             </tr>
           </table>
       </div>
 
-      <div class="controlButtons"><button class="next">Next</button>
+      <div class="controlButtons">
+        <button class="next">Next</button>
         <input type ="checkbox" id="autoplay"/>
         <label for="autoplay" class="button">Autoplay</label>
+        <button class="reset">Reset</button>
+        <div id="ifPaused">
         </div>
+      </div>
       <table id="grid">
 
       </table>
-      <div id="todo">
-        <ul>
-          Todo:
-          <li class="done"><em>About</em>, <em>Controls</em> & <em>Settings</em> buttons & tabs.</li>
-          <li>Input for selecting grid size.</li>
-          <li>Input for choosing refresh frequency.</li>
-          <li>Stopping calculations when only still lifes or nothing remains on board.</li>
-          <li>Button for enabling/disabling <em>birth</em> animation.</li>
-          <li>Indicator of how many iterations were done.</li>
-          <li>Challenges:
-            <ul>
-              <li>Pattern is shown at the grid and user have to draw a pattern which will lead to this shown.</li>
-            </ul>
-          </li>
-          <li>Input for number of iterations which could be performed instantly.</li>
-          <li>Allow to choose some defined pattern to be applied.</li>
-        </ul>
-      </div>
-      <div id="footer"><p>
-        by <a href="http://codepen.io/piotrgredowski/">piotrgredowski</a>
-      </p>
-      <p>
-        created (mostly) during <a href="https://app.pluralsight.com/player?course=play-by-play-lea-verou&author=geoffrey-grosenbach&name=play-by-play-lea-verou-m1&clip=0">pluralsight's advanced css course</a>
-      </p>
-      <p>
-        with <a href="http://lea.verou.me/">Lea Verou</a>
-      </p>
-      </div>
+
+
     </div>
     <script src="life.js" charset="utf-8"></script>
     <script src="info.js" charset="utf-8"></script>

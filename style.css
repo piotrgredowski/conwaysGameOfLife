@@ -1,6 +1,6 @@
 * {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -10,6 +10,10 @@ body {
 
 h1 {
   margin: .2em 0 .2em;
+}
+
+table {
+  margin-bottom: 10px;
 }
 
 a {
@@ -66,15 +70,15 @@ a:visited {
     -moz-appearance: none;
     appearance: none;
     display: block;
-    width: 10px;
-    height: 10px;
+    width: 7.5px;
+    height: 7.5px;
     border: 0;
     background: white;
     transition: .5s;
   }
 
     #grid input[type="checkbox"]:checked {
-      box-shadow: 0 0 0 99px black inset; //because firefox doesn't allow to bg be black
+      box-shadow: 0 0 0 99px black inset; /*because firefox doesn't allow to bg be black*/
       -webkit-animation: birth 1s;
       animation: birth 1s;
     }
@@ -133,6 +137,16 @@ input[type="checkbox"]:checked + label.button {
 button:disabled {
   background-color: hsl(80, 20%, 40%);
   cursor: not-allowed;
+}
+
+.controlButtons {
+
+}
+
+#ifPaused {
+  margin-top: 10px;
+  display: block;
+  height: 15px;
 }
 
 #autoplay {

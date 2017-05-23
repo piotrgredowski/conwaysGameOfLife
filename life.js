@@ -71,6 +71,33 @@ function cloneArray(array) {
     this.started = false;
     this.autoplay = false;
 
+    this.freq = 200;
+
+    this.shapes =
+      {
+        none: '',
+        glider: [[1,1,1],
+                [1,0,0],
+                [0,1,0]],
+        tumbler: [[0,1,1,0,1,1,0],
+                [0,1,1,0,1,1,0],
+                [0,0,1,0,1,0,0],
+                [1,0,1,0,1,0,1],
+                [1,0,1,0,1,0,1],
+                [1,1,0,0,0,1,1]],
+        smallExploder: [[0,1,0],
+                        [1,1,1],
+                        [1,0,1],
+                        [0,1,0]],
+        blinker: [[0,0,0],
+                  [1,1,1],
+                  [0,0,0]],
+        toad: [[0,0,0,0],
+              [0,1,1,1],
+              [1,1,1,0],
+              [0,0,0,0]]
+      };
+
     this.createGrid();
   };
   _.prototype = {
@@ -101,10 +128,29 @@ function cloneArray(array) {
         if (evt.target.nodeName.toLowerCase() == 'input') {
           me.started = false;
         }
+
+      });
+
+      this.grid.addEventListener('click', function(evt) {
+        var coords = evt.target.coords;
+        // var choose = prompt("Choose a shape");
+        var choice = pattern;
+        console.log(choice);
+        // console.log(shapes[0].code[0]);
+        if (choice !== "none" && choice != undefined){
+          for (var y = 0; y < me.shapes[choice].length; y++) {
+            for (var x = 0; x < me.shapes[choice][0].length; x++) {
+              // console.log(me.checkboxes[y + coords[0]][x + coords[1]]);
+              me.checkboxes[y + coords[0]][x + coords[1]].checked = !!me.shapes[choice][y][x];
+            }
+          }
+        }
+
       });
 
       this.grid.addEventListener('keyup', function(evt) {
         var checkbox = evt.target;
+        console.log(checkbox.coords);
         if (checkbox.nodeName.toLowerCase() == 'input') {
           var coords = checkbox.coords;
           var y = coords[0];
@@ -154,6 +200,7 @@ function cloneArray(array) {
 
     next: function (){
       var me = this;
+      var nothingChanged = true;
 
       if (!this.started || this.game) {
         this.play();
@@ -164,28 +211,53 @@ function cloneArray(array) {
       for (var y = 0; y < this.size; y++) {
         for (var x = 0; x < this.size; x++) {
           this.checkboxes[y][x].checked = !!board[y][x];
+          if (this.game.board[y][x] !== this.game.prevBoard[y][x]) {
+            nothingChanged = false;
+          }
         }
       }
 
-      if (this.autoplay) {
-        this.timer = setTimeout(function () {
-          me.next();
-        }, 1000);
+
+      if (!nothingChanged) {
+        $('#ifPaused').textContent = '';
+        if (this.autoplay) {
+          this.timer = setTimeout(function () {
+            me.next();
+          }, lifeView.freq);
+        }
+      } else {
+        $('button.next').disabled = false;
+        $('input#autoplay').checked = false;
+        $('#ifPaused').textContent = "Nothing to update on board...";
       }
+    },
+
+    drawNewBoardByGridAndCell: function(gridDensity, cellSize) {
+      lifeView = new LifeView(document.getElementById('grid'), gridDensity);
+      var temp = document.querySelectorAll('#grid input[type="checkbox"]');
+      for (var i = 0; i < temp.length; i++) {
+        temp[i].style.width = cellSize + 'px';
+        temp[i].style.height = cellSize + 'px';
+      }
+      lifeView.freq = 1000 / $('#freq').value;
+      $('button.next').disabled = false;
+      $('input#autoplay').checked = false;
     }
   };
 })();
 
-var lifeView = new LifeView(document.getElementById('grid'), 30);
+var pattern;
+var lifeView = new LifeView(document.getElementById('grid'), 35);
+// lifeView.reset();
 
 (function() {
   var settings = {
     next: $('button.next'),
     autoplay: $('#autoplay'),
-    birth: $('input#birthToggle'),
-    gridSizeAuto: $('#gridSizeAuto'),
-    gridSize: $('#gridSize'),
-    cellSize: $('#cellSize')
+    gridDensity: $('#gridDensity'),
+    freq: $('#freq'),
+    reset: $('button.reset'),
+    patternForm: $('#patternForm')
   };
 
   settings.next.addEventListener('click', function(event) {
@@ -193,7 +265,7 @@ var lifeView = new LifeView(document.getElementById('grid'), 30);
     lifeView.next();
   });
 
-  settings.autoplay.addEventListener('change', function(e) {
+  settings.autoplay.addEventListener('change', function(event) {
     settings.next.disabled = this.checked;
 
     if (this.checked ) {
@@ -204,12 +276,28 @@ var lifeView = new LifeView(document.getElementById('grid'), 30);
     }
   });
 
-  settings.gridSizeAuto.addEventListener('change', function(event) {
-    settings.gridSize.disabled = this.checked;
-    console.log(+settings.cellSize.value+5);
-    var autoSize = Math.floor(window.innerHeight/(+settings.cellSize.value+5));
-    if (this.checked) {
-      lifeView = new LifeView(document.getElementById('grid'), autoSize);
-    }
+  settings.gridDensity.addEventListener('change', function(event) {
+    var optimalHeight = 375;
+    var size = Math.round((optimalHeight-this.value)/this.value);
+    lifeView.drawNewBoardByGridAndCell(this.value, size);
+    $('#gridDensityValue').textContent = this.value;
   });
+
+  settings.freq.addEventListener('change', function(event) {
+    lifeView.freq = 1000 / settings.freq.value;
+    $('#rangeValue').textContent = settings.freq.value;
+  });
+
+  settings.reset.addEventListener('click', function(event) {
+    console.log("reset");
+    var optimalHeight = 375;
+    var size = Math.floor((optimalHeight-settings.gridDensity.value)/settings.gridDensity.value);
+    lifeView.drawNewBoardByGridAndCell(settings.gridDensity.value, size);
+  });
+
+  settings.patternForm.addEventListener('change', function(e) {
+    console.log(e.target.value);
+    pattern = e.target.value;
+  });
+
 })();

@@ -13,8 +13,14 @@ div.tab .active {
     box-shadow: 0 .05em 2em rgba(0, 0, 0, .5) inset;
 }
 
-i:hover {
-  color: gray;
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
 /* Style the tab content */
@@ -22,11 +28,14 @@ i:hover {
     display: none;
     /*border: 1px solid black;
     border-radius: 1em;*/
-
+    margin: auto;
+    width: 70%;
     margin-bottom: .8em;
     padding: 3px 6px;
 
     font-size: .8em;
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
 }
 
 /* Info buttons*/
@@ -57,8 +66,7 @@ i:hover {
 }
 
 .tabcontent {
-  margin: auto;
-  width: 70%;
+
   /*background: gray;*/
   /*display: block;*/
 }
@@ -84,10 +92,22 @@ i:hover {
   text-align: left;
 }
 
-.tabcontent table input[type="number"] {
-  width: 30%;
+#patternForm {
+  display: block;
 }
 
-#gridSize {
-  width: 30%;
+#gridDensity {
+  width: 100%;
+}
+
+
+.shown {
+  display: block;
+  transition: all 2s linear;
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
 }
