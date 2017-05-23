@@ -1,21 +1,16 @@
 /* Style the tab */
-.tab button {
-  transition: .5s;
-}
 
 div.tab {
     display: inline-block;
     overflow: hidden;
+
     background-color: #f1f1f1;
 }
 
 /* Create an active/current tablink class */
-div.tab button.active {
+div.tab .active {
     background-image: none;
     box-shadow: 0 .05em 2em rgba(0, 0, 0, .5) inset;
-}
-
-i {
 }
 
 i:hover {
@@ -25,33 +20,74 @@ i:hover {
 /* Style the tab content */
 .tabcontent {
     display: none;
-    padding: 3px 6px;
-    font-size: .8em;
     /*border: 1px solid black;
     border-radius: 1em;*/
+
     margin-bottom: .8em;
+    padding: 3px 6px;
+
+    font-size: .8em;
 }
 
 /* Info buttons*/
 .tab  button {
   padding: .3em .5em;
+
+  color: white;
   border: 1px solid rgba(0, 0, 0, .2);
   border-radius: .3em;
-  box-shadow: 0 1px 0 hsla(0, 0%, 100%, .7) inset, 0 .15em .1em -.1em rgba(0, 0, 0, .4);
+  outline: none;
   background: linear-gradient(hsla(0, 0%, 100%, .3), hsla(0, 0%, 100%, 0)) hsl(240, 25%, 55%);
-  color: white;
+  box-shadow: 0 1px 0 hsla(0, 0%, 100%, .7) inset, 0 .15em .1em -.1em rgba(0, 0, 0, .4);
   text-shadow: 0 -.05em .05em rgba(0, 0, 0, .3);
+
   font: inherit;
   font-weight: bold;
-  outline: none;
 }
 
-.tab button:enabled:active, {
+.tab button:enabled:active {
   background-image: none;
   box-shadow: 0 .05em 2em rgba(0, 0, 0, .5) inset;
 }
 
 .tab button:disabled {
-  background-color: hsl(240, 25%, 90%);
   cursor: not-allowed;
+
+  background-color: hsl(240, 25%, 90%);
+}
+
+.tabcontent {
+  margin: auto;
+  width: 70%;
+  /*background: gray;*/
+  /*display: block;*/
+}
+
+.tabcontent table {
+  table-layout: fixed;
+}
+
+.tabcontent table tr td {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.tabcontent  table tr td:nth-of-type(1) {
+  width: 50%;
+  /*float: left;*/
+  text-align: right;
+}
+
+.tabcontent  table tr td:nth-of-type(2) {
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: left;
+}
+
+.tabcontent table input[type="number"] {
+  width: 30%;
+}
+
+#gridSize {
+  width: 30%;
 }

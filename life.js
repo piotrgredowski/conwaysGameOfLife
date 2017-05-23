@@ -46,15 +46,15 @@ function $(selector, container) {
         array[y][x-1], array[y][x+1],
         nextRow[x-1], nextRow[x], nextRow[x+1]
       ].reduce(function (prev, cur) {
-        return prev + +!!cur; //converting undefined to number
+        return prev +!!cur; //converting undefined to number
       }, 0);
       return sum;
     },
 
     toString: function () {
-      return this.board.map(function (row) { return row.join(' ')}).join('\n');
+      return this.board.map(function (row) { return row.join(' ');}).join('\n');
     }
-  }
+  };
 
 // helpers
 // warning: only clones 2d arrays
@@ -93,7 +93,7 @@ function cloneArray(array) {
 
           cell.appendChild(checkbox);
           row.appendChild(cell);
-        };
+        }
 
         fragment.appendChild(row);
       }
@@ -132,7 +132,7 @@ function cloneArray(array) {
                 me.checkboxes[y+1][x].focus();
               }
               break;
-          };
+          }
         }
       });
 
@@ -143,8 +143,8 @@ function cloneArray(array) {
       return this.checkboxes.map( function (row) {
         return row.map(function (checkbox) {
           return +checkbox.checked;
-        })
-      })
+        });
+      });
     },
 
     play: function () {
@@ -156,7 +156,7 @@ function cloneArray(array) {
       var me = this;
 
       if (!this.started || this.game) {
-        this.play()
+        this.play();
       }
       this.game.next();
       var board = this.game.board;
@@ -174,29 +174,27 @@ function cloneArray(array) {
       }
     }
   };
-})()
+})();
 
 var lifeView = new LifeView(document.getElementById('grid'), 30);
 
 (function() {
-  var buttons = {
+  var settings = {
     next: $('button.next'),
-    birth: $('input#birthToggle')
+    autoplay: $('#autoplay'),
+    birth: $('input#birthToggle'),
+    gridSizeAuto: $('#gridSizeAuto'),
+    gridSize: $('#gridSize'),
+    cellSize: $('#cellSize')
   };
 
-  buttons.next.addEventListener('click', function(event) {
+  settings.next.addEventListener('click', function(event) {
     lifeView.autoplay = this.checked;
     lifeView.next();
   });
 
-  buttons.birth.addEventListener('click', function(event) {
-    console.log("birth");
-    
-  });
-
-  $('#autoplay').addEventListener('change', function(e) {
-    buttons.next.disabled = this.checked;
-
+  settings.autoplay.addEventListener('change', function(e) {
+    settings.next.disabled = this.checked;
 
     if (this.checked ) {
       lifeView.autoplay = this.checked;
@@ -205,4 +203,13 @@ var lifeView = new LifeView(document.getElementById('grid'), 30);
       clearTimeout(lifeView.timer);
     }
   });
-})()
+
+  settings.gridSizeAuto.addEventListener('change', function(event) {
+    settings.gridSize.disabled = this.checked;
+    console.log(+settings.cellSize.value+5);
+    var autoSize = Math.floor(window.innerHeight/(+settings.cellSize.value+5));
+    if (this.checked) {
+      lifeView = new LifeView(document.getElementById('grid'), autoSize);
+    }
+  });
+})();

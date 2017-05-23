@@ -19,7 +19,7 @@
       <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'about')">About</button>
         <button class="tablinks" onclick="openTab(event, 'controls')">Controls</button>
-        <button class="tablinks" onclick="openTab(event, 'settings')" >Settings</button>
+        <button class="tablinks" onclick="openTab(event, 'settings')">Settings</button>
       </div>
 
       <div id="controls" class="tabcontent">
@@ -34,10 +34,46 @@
 
       <div id="settings" class="tabcontent">
         <i class="fa fa-times" aria-hidden="true" onclick="closeTab()"></i>
-        <div>
-          <input type="checkbox" id="birthToggle">
-          <label for="birthToggle"><em>Birth</em> effect</label>
-        </div>
+          <table>
+            <tr>
+              <td>
+                <label for="gridSize">Grid size</label>
+              </td>
+              <td>
+                <input type="number" id="gridSize">
+                <input type="checkbox" id="gridSizeAuto">
+                <label for="gridSizeAuto">Auto</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="cellSize">Cell size [px]</label>
+              </td>
+              <td>
+                <input type="number" id="cellSize" value="10">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="freq">Refresh rate [Hz]</label>
+              </td>
+              <td>
+                <input type="number" id="freq">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="birthToggle"><em>Birth</em> effect</label>
+              </td>
+              <td>
+                <input type="checkbox" id="birthToggle">
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
       </div>
 
       <div class="controlButtons"><button class="next">Next</button>
