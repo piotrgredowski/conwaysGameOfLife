@@ -65,7 +65,7 @@ function cloneArray(array) {
 })();
 
 (function(){
-  var _ = self.LifeView = function (table, size) {
+  var _ = self.LifeView = function (table, size, initialBoardArray = []) {
     this.grid = table;
     this.size = size;
     this.started = false;
@@ -98,14 +98,20 @@ function cloneArray(array) {
               [0,0,0,0]]
       };
 
-    this.createGrid();
+    this.createGrid(initialBoardArray);
   };
   _.prototype = {
-    createGrid: function () {
+    createGrid: function (initialBoardArray) {
       var me = this;
       var fragment = document.createDocumentFragment();
       this.grid.innerHTML = '';
       this.checkboxes = [];
+
+      const isInitialBoardPassed = initialBoardArray.length > 0;
+      const [initialBoardX, initialBoardY] = [
+        Math.min(initialBoardArray.length, this.size),
+        Math.min(initialBoardArray.length ? initialBoardArray[0].length : 0, this.size)
+      ];
 
       for (var y = 0; y < this.size; y++) {
         var row = document.createElement('tr');
@@ -117,6 +123,10 @@ function cloneArray(array) {
           checkbox.type = 'checkbox';
           this.checkboxes[y][x] = checkbox;
           checkbox.coords = [y, x];
+
+          if (isInitialBoardPassed && x < initialBoardX && y < initialBoardY) {
+            checkbox.checked = !!initialBoardArray[y][x];
+          }
 
           cell.appendChild(checkbox);
           row.appendChild(cell);
@@ -131,21 +141,24 @@ function cloneArray(array) {
 
       });
 
+      const self = this;
+
       this.grid.addEventListener('click', function(evt) {
         var coords = evt.target.coords;
-        // var choose = prompt("Choose a shape");
+        if (!coords) {
+          return;
+        }
         var choice = pattern;
-        console.log(choice);
-        // console.log(shapes[0].code[0]);
+        const size = self.checkboxes.length;
         if (choice !== "none" && choice != undefined){
           for (var y = 0; y < me.shapes[choice].length; y++) {
             for (var x = 0; x < me.shapes[choice][0].length; x++) {
-              // console.log(me.checkboxes[y + coords[0]][x + coords[1]]);
-              me.checkboxes[y + coords[0]][x + coords[1]].checked = !!me.shapes[choice][y][x];
+              if (y + coords[0] < size && x + coords[1] < size) {
+                me.checkboxes[y + coords[0]][x + coords[1]].checked = !!me.shapes[choice][y][x];
+              }
             }
           }
         }
-
       });
 
       this.grid.addEventListener('keyup', function(evt) {
@@ -232,8 +245,8 @@ function cloneArray(array) {
       }
     },
 
-    drawNewBoardByGridAndCell: function(gridDensity, cellSize) {
-      lifeView = new LifeView(document.getElementById('grid'), gridDensity);
+    drawNewBoardByGridAndCell: function(gridDensity, cellSize, initialBoardArray = []) {
+      lifeView = new LifeView(document.getElementById('grid'), gridDensity, initialBoardArray);
       var temp = document.querySelectorAll('#grid input[type="checkbox"]');
       for (var i = 0; i < temp.length; i++) {
         temp[i].style.width = cellSize + 'px';
@@ -278,8 +291,10 @@ var lifeView = new LifeView(document.getElementById('grid'), 35);
 
   settings.gridDensity.addEventListener('change', function(event) {
     var optimalHeight = 375;
-    var size = Math.round((optimalHeight-this.value)/this.value);
-    lifeView.drawNewBoardByGridAndCell(this.value, size);
+    var size = Math.round((optimalHeight - this.value) / this.value);
+
+    const boardCached = [...lifeView.boardArray];
+    lifeView.drawNewBoardByGridAndCell(this.value, size, boardCached);
     $('#gridDensityValue').textContent = this.value;
   });
 
