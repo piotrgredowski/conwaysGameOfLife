@@ -92,6 +92,10 @@ div.tab .active {
   text-align: left;
 }
 
+#patterns {
+  text-align: left;
+}
+
 #patternForm {
   display: block;
 }

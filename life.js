@@ -121,6 +121,8 @@ function cloneArray(array) {
           var cell = document.createElement('td');
           var checkbox = document.createElement('input');
           checkbox.type = 'checkbox';
+          checkbox.style.width = getCellSize(+this.size) + 'px';
+          checkbox.style.height = getCellSize(+this.size) + 'px';
           this.checkboxes[y][x] = checkbox;
           checkbox.coords = [y, x];
 
@@ -259,6 +261,12 @@ function cloneArray(array) {
   };
 })();
 
+const boardSizePx = 500;
+
+const getCellSize = (gridSize) => {
+  return Math.round((boardSizePx - gridSize) / gridSize);
+}
+
 var pattern;
 var lifeView = new LifeView(document.getElementById('grid'), 35);
 // lifeView.reset();
@@ -290,9 +298,7 @@ var lifeView = new LifeView(document.getElementById('grid'), 35);
   });
 
   settings.gridDensity.addEventListener('change', function(event) {
-    var optimalHeight = 375;
-    var size = Math.round((optimalHeight - this.value) / this.value);
-
+    var size = getCellSize(this.value);
     const boardCached = [...lifeView.boardArray];
     lifeView.drawNewBoardByGridAndCell(this.value, size, boardCached);
     $('#gridDensityValue').textContent = this.value;
@@ -305,8 +311,7 @@ var lifeView = new LifeView(document.getElementById('grid'), 35);
 
   settings.reset.addEventListener('click', function(event) {
     console.log("reset");
-    var optimalHeight = 375;
-    var size = Math.floor((optimalHeight-settings.gridDensity.value)/settings.gridDensity.value);
+    var size = getCellSize(settings.gridDensity.value);
     lifeView.drawNewBoardByGridAndCell(settings.gridDensity.value, size);
   });
 
